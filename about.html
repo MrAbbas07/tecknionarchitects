@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Tecknion Architects</title>
+    <link rel="stylesheet" href="home.css">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .about-container {
+            padding: 120px 40px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .page-description {
+            text-align: center;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto 60px;
+            line-height: 1.6;
+        }
+
+        .section {
+            margin-bottom: 60px;
+            background: var(--white);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--text-color);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-content {
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .team-member {
+            text-align: center;
+        }
+
+        .team-member img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 3px solid var(--primary-color);
+        }
+
+        .team-member h3 {
+            font-size: 1.3rem;
+            color: var(--text-color);
+            margin-bottom: 5px;
+        }
+
+        .team-member p {
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+
+        .values-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .value-item {
+            text-align: center;
+            padding: 20px;
+            background: var(--light-gray);
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .value-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .value-item i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .value-item h3 {
+            font-size: 1.2rem;
+            color: var(--text-color);
+            margin-bottom: 10px;
+        }
+
+        .value-item p {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        .section-content ul li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-content ul li i {
+            color: var(--primary-color);
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .about-container {
+                padding: 100px 20px 20px;
+            }
+
+            .section {
+                padding: 30px;
+            }
+        }
+
+        #nav-links a {
+            color: #000;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        #nav-links a:hover {
+            color: #222;
+        }
+
+        #nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #000;
+            transition: width 0.3s ease;
+        }
+
+        #nav-links a:hover::after {
+            width: 100%;
+            background-color: #222;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            background: transparent;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            background: rgba(20, 20, 20, 0.85);
+            padding: 15px 40px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        header.scrolled #nav-links a {
+            color: white;
+        }
+        
+        header.scrolled #nav-links a::after {
+            background-color: white;
+        }
+    </style>
+</head>
+<body class="about-page">
+    <header>
+        <div class="logo">
+            <a href="home.html">
+                <img src="images/TECKNION logo[1].png" alt="Tecknion logo">
+            </a>
+        </div>
+        <nav id="nav-links">
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="portfolio.html">Portfolio</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="about.html">About Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="about-container">
+        <h1 class="page-title">About Tecknion Architects</h1>
+        <p class="page-description">We are a team of passionate architects and designers dedicated to creating innovative and sustainable architectural solutions that transform spaces and inspire communities.</p>
+
+        <div class="section">
+            <h2 class="section-title"><i class="fas fa-building"></i> Our Story</h2>
+            <div class="section-content">
+                <p>Founded in 2010, Tecknion Architects has grown from a small design studio to a leading architectural firm in Hyderabad. Our journey has been marked by a commitment to excellence, innovation, and sustainable design practices.</p>
+                <p>Over the years, we have completed numerous projects ranging from residential complexes to commercial spaces, each reflecting our dedication to quality and attention to detail.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title"><i class="fas fa-users"></i> Our Chief Architects</h2>
+            <div class="founders-container">
+                <div class="founder">
+                    <div class="founder-image">
+                        <img src="images/team1.jpg" alt="Co-Founder 1">
+                    </div>
+                    <div class="founder-info">
+                        <h3>Rahmath Ali</h3>
+                        <p class="founder-title">Co-Founder & Principal Architect</p>
+                        <div class="founder-bio">
+                            <p>With over 20 years of experience in architectural design, Rahmath brings a wealth of knowledge and expertise to Tecknion Architects. He holds a Master's degree in Architecture from the prestigious Indian Institute of Architecture and has led numerous award-winning projects throughout his career.</p>
+                            <p>Rahmath specializes in sustainable design and has been a pioneer in implementing eco-friendly architectural solutions across India. His vision for creating spaces that harmonize with nature while meeting modern needs has been the guiding principle of Tecknion since its inception.</p>
+                        </div>
+                        <div class="founder-credentials">
+                            <div class="credential"><i class="fas fa-graduation-cap"></i> M.Arch, Indian Institute of Architecture</div>
+                            <div class="credential"><i class="fas fa-certificate"></i> LEED Accredited Professional</div>
+                            <div class="credential"><i class="fas fa-award"></i> Architectural Excellence Award, 2019</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="founder">
+                    <div class="founder-image">
+                        <img src="images/team2.jpg" alt="Co-Founder 2">
+                    </div>
+                    <div class="founder-info">
+                        <h3>Chandrashekhar Reddy</h3>
+                        <p class="founder-title">Co-Founder & Creative Director</p>
+                        <div class="founder-bio">
+                            <p>Chandrashekhar is the creative force behind Tecknion's distinctive design aesthetic. With a background in both architecture and interior design, she brings a holistic approach to every project. Her work has been featured in numerous architectural publications and has earned recognition for its innovative use of space and light.</p>
+                            <p>Before co-founding Tecknion, Chandrashekhar worked with leading architectural firms in Singapore and Dubai, bringing international perspective and expertise to the company. She is passionate about creating spaces that tell stories and evoke emotions while remaining functional and timeless.</p>
+                        </div>
+                        <div class="founder-credentials">
+                            <div class="credential"><i class="fas fa-graduation-cap"></i> B.Arch, National Institute of Design</div>
+                            <div class="credential"><i class="fas fa-certificate"></i> Certified Interior Designer</div>
+                            <div class="credential"><i class="fas fa-award"></i> Top 10 Designers of the Year, 2018</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <style>
+        .founders-container {
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+            margin-top: 30px;
+        }
+        
+        .founder {
+            display: flex;
+            gap: 30px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .founder-image {
+            flex: 0 0 300px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .founder-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .founder:hover .founder-image img {
+            transform: scale(1.05);
+        }
+        
+        .founder-info {
+            flex: 1;
+            padding: 30px;
+        }
+        
+        .founder-info h3 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .founder-title {
+            color: var(--primary-color, #4caf50);
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .founder-bio {
+            margin-bottom: 25px;
+            line-height: 1.7;
+            color: #555;
+        }
+        
+        .founder-bio p {
+            margin-bottom: 15px;
+        }
+        
+        .founder-credentials {
+            background: #f1f1f1;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .credential {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+        
+        .credential i {
+            color: var(--primary-color, #4caf50);
+        }
+        
+        @media (max-width: 900px) {
+            .founder {
+                flex-direction: column;
+            }
+            
+            .founder-image {
+                flex: 0 0 auto;
+                height: 300px;
+            }
+        }
+        </style>
+
+        <div class="section">
+            <h2 class="section-title"><i class="fas fa-star"></i> Our Values</h2>
+            <div class="values-list">
+                <div class="value-item">
+                    <i class="fas fa-lightbulb"></i>
+                    <h3>Innovation</h3>
+                    <p>We constantly push boundaries to create unique and forward-thinking designs.</p>
+                </div>
+                <div class="value-item">
+                    <i class="fas fa-leaf"></i>
+                    <h3>Sustainability</h3>
+                    <p>We prioritize eco-friendly solutions and sustainable building practices.</p>
+                </div>
+                <div class="value-item">
+                    <i class="fas fa-handshake"></i>
+                    <h3>Collaboration</h3>
+                    <p>We work closely with clients to bring their vision to life.</p>
+                </div>
+                <div class="value-item">
+                    <i class="fas fa-award"></i>
+                    <h3>Excellence</h3>
+                    <p>We strive for perfection in every detail of our projects.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title"><i class="fas fa-trophy"></i> Our Achievements</h2>
+            <div class="section-content">
+                <ul style="list-style-type: none; padding-left: 0;">
+                    <li style="margin-bottom: 15px;">
+                        <i class="fas fa-check-circle" style="color: #4caf50; margin-right: 10px;"></i>
+                        Awarded "Best Architectural Firm 2023" by Architecture Today
+                    </li>
+                    <li style="margin-bottom: 15px;">
+                        <i class="fas fa-check-circle" style="color: #4caf50; margin-right: 10px;"></i>
+                        LEED Platinum Certification for Sustainable Design
+                    </li>
+                    <li style="margin-bottom: 15px;">
+                        <i class="fas fa-check-circle" style="color: #4caf50; margin-right: 10px;"></i>
+                        Featured in Architectural Digest's "Top 50 Firms to Watch"
+                    </li>
+                    <li style="margin-bottom: 15px;">
+                        <i class="fas fa-check-circle" style="color: #4caf50; margin-right: 10px;"></i>
+                        Completed 100+ successful projects across India
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="social-links">
+        <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+        <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+    </div>
+
+    <script src="home.js"></script>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Tecknion Architects</h3>
+                <p>Creating innovative and sustainable architectural solutions that transform spaces and inspire communities.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="portfolio.html">Portfolio</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <address>
+                    Plot No. 37B, Journalists Colony,<br>
+                    Jubilee Hills, Film Nagar<br>
+                    Hyderabad, Telangana<br>
+                    India - 500001
+                </address>
+                <p>Email: <a href="mailto:tecknion@gmail.com">tecknion@gmail.com</a></p>
+                <p>Phone: <a href="tel:+914066366299">+91 40 663 662 99</a></p>
+            </div>
+        </div>
+        
+
+        <div class="footer-bottom">
+            <p>© 2025 Tecknion Architects. All rights reserved.</p>
+            <p>Designed by M.S.ABBAS</p>
+        </div>
+    </footer>
+
+    <style>
+    .footer {
+        background-color: #1c1c1c;
+        color: white;
+        padding: 40px 20px 20px;
+        font-family: 'EB Garamond', Arial, sans-serif;
+        margin-top: 40px;
+    }
+    
+    .footer-content {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        max-width: 1200px;
+        margin: 0 auto 30px;
+    }
+    
+    .footer-section {
+        flex: 1;
+        min-width: 250px;
+        margin-bottom: 20px;
+        padding: 0 15px;
+    }
+    
+    .footer-section h3 {
+        font-size: 18px;
+        margin-bottom: 20px;
+        font-weight: 500;
+        position: relative;
+        padding-bottom: 10px;
+    }
+    
+    .footer-section h3::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 50px;
+        height: 2px;
+        background-color: var(--primary-color, #4caf50);
+    }
+    
+    .footer-section p {
+        line-height: 1.6;
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+    
+    .footer-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .footer-links li {
+        margin-bottom: 12px;
+    }
+    
+    .footer-links a {
+        color: white;
+        text-decoration: none;
+        transition: color 0.3s, padding-left 0.3s;
+        display: inline-block;
+    }
+    
+    .footer-links a:hover {
+        color: var(--primary-color, #4caf50);
+        padding-left: 5px;
+    }
+    
+    address {
+        font-style: normal;
+        line-height: 1.6;
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+    
+    .footer-section a {
+        color: white;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+    
+    .footer-section a:hover {
+        color: var(--primary-color, #4caf50);
+    }
+    
+
+    .footer-bottom {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding-top: 20px;
+        border-top: 1px solid #333;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        font-size: 12px;
+    }
+    
+    @media (max-width: 768px) {
+        .footer-content {
+            flex-direction: column;
+        }
+        
+        .footer-bottom {
+            flex-direction: column;
+            text-align: center;
+        }
+        
+        .footer-bottom p {
+            margin: 5px 0;
+        }
+    }
+    </style>
+</body>
+</html> 

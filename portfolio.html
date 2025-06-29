@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Tecknion Architects</title>
+    <link rel="stylesheet" href="home.css">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            position: relative;
+            overflow-x: hidden;
+            overflow-y: auto;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .main-container {
+            position: relative;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0;
+            transition: all 0.3s ease;
+        }
+
+        .portfolio-container {
+            padding: 120px 40px 40px;
+            margin: 0 auto;
+            max-width: 1400px;
+            height: auto;
+            overflow: visible;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+            padding-bottom: 40px;
+            transition: all 0.3s ease;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Side Panel Styles */
+        .side-panel {
+            position: fixed;
+            top: 0;
+            right: -600px;
+            width: 600px;
+            height: 100vh;
+            background: var(--white);
+            z-index: 2000;
+            transition: right 0.3s ease;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .side-panel.active {
+            right: 0;
+        }
+
+        /* Adjust layout when panel is active */
+        body.panel-active .main-container {
+            width: calc(100% - 600px);
+            max-width: 800px;
+            margin: 0;
+            padding: 0 40px;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        body.panel-active .portfolio-grid {
+            grid-template-columns: repeat(2, 1fr);
+            max-width: 800px;
+            margin: 0;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                width: 100%;
+                padding: 0;
+            }
+
+            .portfolio-container {
+                padding: 120px 20px 40px;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+                padding: 0 20px;
+            }
+
+            .side-panel {
+                width: 100%;
+                right: -100%;
+            }
+
+            body.panel-active .main-container {
+                width: 50%;
+                max-width: none;
+                margin: 0;
+                padding: 0 20px;
+                height: 100vh;
+                overflow-y: auto;
+            }
+
+            body.panel-active .portfolio-grid {
+                grid-template-columns: 1fr;
+                max-width: none;
+                margin: 0;
+                width: 100%;
+                padding: 0 10px;
+            }
+        }
+
+        /* Scrolling behavior */
+        .portfolio-container {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .portfolio-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .side-panel .panel-content {
+            height: calc(100vh - 60px);
+            overflow-y: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .side-panel .panel-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Fix body overflow when panel is active */
+        body.panel-active {
+            overflow-y: hidden;
+        }
+
+        body.panel-active .portfolio-container {
+            height: auto;
+            overflow: visible;
+        }
+
+        .project-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            background: var(--white);
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .project-info {
+            padding: 20px;
+            background: var(--white);
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+
+        .project-description {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            color: var(--text-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .page-description {
+            text-align: center;
+            color: var(--text-light);
+            max-width: 800px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+
+        .panel-header {
+            padding: 20px;
+            background: var(--primary-color);
+            color: var(--white);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .panel-title {
+            font-size: 1.8rem;
+            margin: 0;
+        }
+
+        .close-button {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .close-button:hover {
+            transform: scale(1.1);
+        }
+
+        .panel-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .project-slideshow {
+            width: 100%;
+            height: 300px;
+            position: relative;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .project-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .project-slide.active {
+            opacity: 1;
+        }
+
+        .project-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .slide-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .slide-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .slide-dot.active {
+            background: var(--white);
+        }
+
+        .slide-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: var(--white);
+            padding: 15px;
+            cursor: pointer;
+            border: none;
+            border-radius: 50%;
+            font-size: 20px;
+            transition: background 0.3s ease;
+            z-index: 10;
+        }
+
+        .slide-arrow:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .slide-prev {
+            left: 20px;
+        }
+
+        .slide-next {
+            right: 20px;
+        }
+
+        .project-details {
+            margin-top: 20px;
+        }
+
+        .project-details h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
+
+        .project-details p {
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        /* Footer styles */
+        footer {
+            position: relative;
+            width: 100%;
+            background: var(--dark-gray);
+            color: var(--white);
+            padding: 20px;
+            text-align: center;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+            margin-top: 40px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.2rem;
+        }
+
+        /* Hide footer when side panel is active */
+        body.panel-active footer {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        @media (max-width: 768px) {
+            footer {
+                padding: 15px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 40px;
+            background: transparent;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header.scrolled {
+            background: rgba(20, 20, 20, 0.85);
+            padding: 15px 40px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        header.scrolled #nav-links a {
+            color: white;
+        }
+        
+        header.scrolled #nav-links a::after {
+            background-color: white;
+        }
+
+        #nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        #nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        #nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        #nav-links a:hover::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="portfolio-page">
+    <header>
+        <div class="logo">
+            <a href="home.html">
+                <img src="images/TECKNION logo[1].png" alt="Tecknion logo">
+            </a>
+        </div>
+        <nav id="nav-links">
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="portfolio.html">Portfolio</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="about.html">About Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="main-container">
+        <div class="portfolio-container">
+            <h1 class="page-title">Our Portfolio</h1>
+            <p class="page-description">Explore our collection of architectural masterpieces that showcase our commitment to innovative design and sustainable architecture.</p>
+            
+            <div class="portfolio-grid">
+                <div class="project-card" id="grand-entrance">
+                    <img src="images/pr1.jpg" alt="Grand Entrance Project" class="project-image">
+                    <div class="project-info">
+                        <h3 class="project-title">GATED COMMUNITES</h3>
+                        <p class="project-description">A modern residential complex featuring innovative design elements and sustainable architecture.</p>
+                    </div>
+                </div>
+
+                <div class="project-card" id="ks-reddy">
+                    <img src="images/pr2.jpg" alt="K S Reddy Project" class="project-image">
+                    <div class="project-info">
+                        <h3 class="project-title">VILLAS</h3>
+                        <p class="project-description">A luxurious villa combining traditional elements with contemporary design.</p>
+                    </div>
+                </div>
+
+                <div class="project-card" id="lavish-villa">
+                    <img src="images/pr3.jpg" alt="Lavish Villa" class="project-image">
+                    <div class="project-info">
+                        <h3 class="project-title">FARMHOUSES</h3>
+                        <p class="project-description">An exclusive residential project featuring state-of-the-art amenities and elegant design.</p>
+                    </div>
+                </div>
+
+                <div class="project-card" id="vijay-lakshmi">
+                    <img src="images/pr4.jpg" alt="The Vijay Lakshmi Silks Project" class="project-image">
+                    <div class="project-info">
+                        <h3 class="project-title">RETAIL</h3>
+                        <p class="project-description">A commercial complex designed for optimal functionality and aesthetic appeal.</p>
+                    </div>
+                </div>
+
+                <div class="project-card" id="narayani-silks">
+                    <img src="images/pr5.jpg" alt="Narayani Silks Project" class="project-image">
+                    <div class="project-info">
+                        <h3 class="project-title">Narayani Silks Project</h3>
+                        <p class="project-description">A retail space designed to enhance customer experience and brand identity.</p>
+                    </div>
+                </div>
+
+                <div class="project-card" id="commercial">
+                    <img src="images/pr6.jpg" alt="Commercial Project" class="project-image">
+                    <div class="project-info">
+                        <h3 class="project-title">COMMERCIAL</h3>
+                        <p class="project-description">A modern office complex featuring sustainable design and efficient space utilization.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Side Panel -->
+    <div class="side-panel" id="sidePanel">
+        <div class="panel-header">
+            <h2 class="panel-title">Project Title</h2>
+            <button class="close-button">&times;</button>
+        </div>
+        <div class="panel-content">
+            <div class="project-slideshow">
+                <div class="project-slides">
+                    <!-- Slides will be added dynamically -->
+                </div>
+                <button class="slide-arrow slide-prev">&#10094;</button>
+                <button class="slide-arrow slide-next">&#10095;</button>
+                <div class="slide-nav">
+                    <!-- Dots will be added dynamically -->
+                </div>
+            </div>
+            <div class="project-details">
+                <div class="project-details-header">
+                    <h3>Project Details</h3>
+                    <div class="project-meta">
+                        <span><i class="fas fa-calendar-alt"></i> Completed: 2023</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Location: Hyderabad</span>
+                    </div>
+                </div>
+                <div class="project-description-container">
+                    <p class="panel-description"></p>
+                </div>
+                <div class="project-features">
+                    <h4>Key Features</h4>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check-circle"></i> <span>Modern Design</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span>Sustainable Materials</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span>Energy Efficient</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span>Smart Home Integration</span></li>
+                    </ul>
+                </div>
+                <div class="project-cta">
+                    <a href="contact.html" class="cta-button">Inquire About Similar Projects</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <style>
+    /* Enhanced Side Panel Styles */
+    .side-panel {
+        background: #f8f8f8;
+    }
+    
+    .panel-header {
+        background: linear-gradient(135deg, var(--primary-color, #4caf50), #2e7d32);
+        padding: 25px;
+    }
+    
+    .panel-title {
+        font-size: 2rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+    
+    .close-button {
+        font-size: 28px;
+        transition: all 0.3s;
+    }
+    
+    .close-button:hover {
+        transform: rotate(90deg);
+    }
+    
+    .project-slideshow {
+        height: 350px;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        margin: 0 0 30px;
+    }
+    
+    .slide-arrow {
+        background: rgba(0,0,0,0.6);
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        opacity: 0.7;
+        transition: all 0.3s;
+    }
+    
+    .slide-arrow:hover {
+        opacity: 1;
+        background: rgba(0,0,0,0.8);
+        transform: scale(1.1);
+    }
+    
+    .slide-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.5);
+        transition: all 0.3s;
+        margin: 0 5px;
+    }
+    
+    .slide-dot.active {
+        background: white;
+        transform: scale(1.2);
+    }
+    
+    .project-details {
+        padding: 0 15px;
+    }
+    
+    .project-details-header {
+        margin-bottom: 20px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 15px;
+    }
+    
+    .project-details h3 {
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+        color: #333;
+    }
+    
+    .project-meta {
+        display: flex;
+        gap: 20px;
+        color: #666;
+        font-size: 0.9rem;
+        margin-top: 10px;
+    }
+    
+    .project-meta span {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    
+    .project-meta i {
+        color: var(--primary-color, #4caf50);
+    }
+    
+    .project-description-container {
+        margin-bottom: 25px;
+        line-height: 1.8;
+    }
+    
+    .panel-description {
+        font-size: 1.05rem;
+        color: #444;
+    }
+    
+    .project-features {
+        background: #f1f1f1;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 25px;
+    }
+    
+    .project-features h4 {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+        color: #333;
+    }
+    
+    .features-list {
+        list-style: none;
+        padding: 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+    
+    .features-list li {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .features-list i {
+        color: var(--primary-color, #4caf50);
+        font-size: 1.1rem;
+    }
+    
+    .project-cta {
+        text-align: center;
+        margin-top: 30px;
+    }
+    
+    .cta-button {
+        display: inline-block;
+        background: var(--primary-color, #4caf50);
+        color: white;
+        padding: 12px 25px;
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s;
+        box-shadow: 0 4px 10px rgba(76, 175, 80, 0.3);
+    }
+    
+    .cta-button:hover {
+        background: #3d8b40;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(76, 175, 80, 0.4);
+    }
+    
+    @media (max-width: 768px) {
+        .features-list {
+            grid-template-columns: 1fr;
+        }
+        
+        .project-meta {
+            flex-direction: column;
+            gap: 10px;
+        }
+    }
+    </style>
+
+    <div class="social-links">
+        <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+        <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+    </div>
+
+    <script src="home.js"></script>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Tecknion Architects</h3>
+                <p>Creating innovative and sustainable architectural solutions that transform spaces and inspire communities.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="portfolio.html">Portfolio</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <address>
+                    Plot No. 37B, Journalists Colony,<br>
+                    Jubilee Hills, Film Nagar<br>
+                    Hyderabad, Telangana<br>
+                    India - 500001
+                </address>
+                <p>Email: <a href="mailto:tecknion@gmail.com">tecknion@gmail.com</a></p>
+                <p>Phone: <a href="tel:+914066366299">+91 40 663 662 99</a></p>
+            </div>
+        </div>
+        
+
+        <div class="footer-bottom">
+            <p>© 2025 Tecknion Architects. All rights reserved.</p>
+            <p>Designed by M.S.ABBAS</p>
+        </div>
+    </footer>
+
+    <style>
+    .footer {
+        background-color: #1c1c1c;
+        color: white;
+        padding: 40px 20px 20px;
+        font-family: 'EB Garamond', Arial, sans-serif;
+        margin-top: 40px;
+    }
+    
+    .footer-content {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        max-width: 1200px;
+        margin: 0 auto 30px;
+    }
+    
+    .footer-section {
+        flex: 1;
+        min-width: 250px;
+        margin-bottom: 20px;
+        padding: 0 15px;
+    }
+    
+    .footer-section h3 {
+        font-size: 18px;
+        margin-bottom: 20px;
+        font-weight: 500;
+        position: relative;
+        padding-bottom: 10px;
+    }
+    
+    .footer-section h3::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 50px;
+        height: 2px;
+        background-color: var(--primary-color, #4caf50);
+    }
+    
+    .footer-section p {
+        line-height: 1.6;
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+    
+    .footer-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .footer-links li {
+        margin-bottom: 12px;
+    }
+    
+    .footer-links a {
+        color: white;
+        text-decoration: none;
+        transition: color 0.3s, padding-left 0.3s;
+        display: inline-block;
+    }
+    
+    .footer-links a:hover {
+        color: var(--primary-color, #4caf50);
+        padding-left: 5px;
+    }
+    
+    address {
+        font-style: normal;
+        line-height: 1.6;
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+    
+    .footer-section a {
+        color: white;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+    
+    .footer-section a:hover {
+        color: var(--primary-color, #4caf50);
+    }
+    
+
+    .footer-bottom {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding-top: 20px;
+        border-top: 1px solid #333;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        font-size: 12px;
+    }
+    
+    @media (max-width: 768px) {
+        .footer-content {
+            flex-direction: column;
+        }
+        
+        .footer-bottom {
+            flex-direction: column;
+            text-align: center;
+        }
+        
+        .footer-bottom p {
+            margin: 5px 0;
+        }
+    }
+    </style>
+</body>
+</html> 

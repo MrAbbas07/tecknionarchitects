@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        pre {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Contact Form Test</h1>
+    <p>This page tests the form submission functionality directly.</p>
+    
+    <form id="testForm">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="phone">Phone:</label>
+            <input type="text" id="phone" name="phone">
+        </div>
+        
+        <div class="form-group">
+            <label for="subject">Subject:</label>
+            <input type="text" id="subject" name="subject" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+        </div>
+        
+        <button type="submit">Submit</button>
+    </form>
+    
+    <div id="result" style="display: none;"></div>
+    
+    <h2>Debug Information:</h2>
+    <div id="debug">
+        <h3>Request:</h3>
+        <pre id="requestData">No request sent yet</pre>
+        
+        <h3>Response:</h3>
+        <pre id="responseData">No response received yet</pre>
+    </div>
+    
+    <script>
+        document.getElementById('testForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const resultDiv = document.getElementById('result');
+            const requestDataDiv = document.getElementById('requestData');
+            const responseDataDiv = document.getElementById('responseData');
+            
+            resultDiv.style.display = 'none';
+            resultDiv.className = '';
+            
+            // Get form data
+            const formData = new FormData(this);
+            const formDataObj = {};
+            formData.forEach((value, key) => {
+                formDataObj[key] = value;
+            });
+            
+            // Show request data
+            requestDataDiv.textContent = JSON.stringify(formDataObj, null, 2);
+            
+            // Show loading state
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.textContent;
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+            
+            try {
+                console.log('Sending form data:', formDataObj);
+                
+                // Send data to server
+                const response = await fetch('process_form.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formDataObj)
+                });
+                
+                console.log('Response status:', response.status);
+                
+                // Get response as text
+                const responseText = await response.text();
+                console.log('Response text:', responseText);
+                responseDataDiv.textContent = responseText;
+                
+                // Try to parse JSON
+                try {
+                    const result = JSON.parse(responseText);
+                    
+                    if (result.success) {
+                        // Show success message
+                        resultDiv.textContent = 'Thank you! Your message has been sent successfully.';
+                        resultDiv.className = 'success';
+                        this.reset(); // Clear the form
+                    } else {
+                        // Show error message
+                        resultDiv.textContent = result.message || 'Sorry, there was a problem sending your message. Please try again.';
+                        resultDiv.className = 'error';
+                    }
+                } catch (e) {
+                    console.error('Failed to parse JSON response:', e);
+                    resultDiv.textContent = 'Error: Invalid response from server. See debug information below.';
+                    resultDiv.className = 'error';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                resultDiv.textContent = 'Error: ' + error.message;
+                resultDiv.className = 'error';
+                responseDataDiv.textContent = error.toString();
+            } finally {
+                // Reset button state
+                submitBtn.textContent = originalBtnText;
+                submitBtn.disabled = false;
+                resultDiv.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

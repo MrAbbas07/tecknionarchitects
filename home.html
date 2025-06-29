@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tecknion Architects</title>
+    <link rel="stylesheet" href="home.css">
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="home.html">
+                <img src="images/TECKNION logo[1].png" alt="Tecknion logo">
+            </a>
+        </div>
+        <nav id="nav-links">
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="portfolio.html">Portfolio</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="about.html">About Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="slideshow-container">
+        <div class="slide fade">
+            <a href="portfolio.html#grand-entrance">
+                <img src="images/pr1.jpg" alt="Grand Entrance Project">
+            </a>
+        </div>
+        <div class="slide fade">
+            <a href="portfolio.html#ks-reddy">
+                <img src="images/pr2.jpg" alt="K S Reddy Project">
+            </a>
+        </div>
+        <div class="slide fade">
+            <a href="portfolio.html#lavish-villa">
+                <img src="images/pr3.jpg" alt="Lavish Villa">
+            </a>
+        </div>
+        <div class="slide fade">
+            <a href="portfolio.html#vijay-lakshmi">
+                <img src="images/pr4.jpg" alt="The Vijay Lakshmi Silks Project">
+            </a>
+        </div>
+        <div class="slide fade">
+            <a href="portfolio.html#narayani-silks">
+                <img src="images/pr5.jpg" alt="Narayani Silks Project">
+            </a>
+        </div>
+        <div class="slide fade">
+            <a href="portfolio.html#commercial">
+                <img src="images/pr6.jpg" alt="Commercial Project">
+            </a>
+        </div>
+        
+        <!-- Navigation arrows -->
+        <a class="prev" onclick="changeSlide(-1)">‹</a>
+        <a class="next" onclick="changeSlide(1)">›</a>
+    </div>
+
+    <div class="query-button" onclick="toggleChat()">
+        <i class="fas fa-comments"></i> Queries
+    </div>
+    <div class="chat-popup hidden" id="chatPopup">
+        <div class="chat-header">
+            <span><i class="fas fa-robot"></i> Virtual Assistant</span>
+            <button onclick="toggleChat()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="chat-body">
+            <div class="chat-messages" id="chatMessages">
+                <div class="bot-message">Hello! I'm Tecknion's virtual assistant. How can I help you today?</div>
+            </div>
+            <input type="text" id="userInput" placeholder="Type your query..." onkeydown="handleInput(event)">
+        </div>
+    </div>
+
+    <div class="social-links">
+        <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+    </div>
+
+    
+    
+    <script src="home.js"></script>
+</body>
+</html>
